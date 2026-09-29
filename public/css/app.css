@@ -53,6 +53,8 @@ h1,h2,h3{font-family:var(--serif);line-height:1.2;margin:0}
 .years b{font-family:var(--serif);font-size:2.3rem;line-height:1}.years span{font-size:.82rem;color:#e6dcc8;max-width:170px;display:block}
 .about .tx{padding:20px 20px 20px 56px}.about .k{color:var(--gold-d);letter-spacing:.18em;font-size:.72rem;font-weight:600}.about h2{font-size:2rem;color:var(--green-d);margin:10px 0 14px}.about p{color:#4a4036;max-width:520px}
 .vals{display:flex;gap:26px;flex-wrap:wrap;margin:24px 0 28px;font-size:.8rem}.vals b{display:block;font-size:.85rem}.vals span{color:var(--muted);font-size:.75rem}
+.vals .val{display:flex;gap:10px;align-items:flex-start}
+.vals .val svg{width:22px;height:22px;flex:none;margin-top:1px;stroke:var(--gold-d);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .band{background:var(--green);color:#fff;padding:38px 0;margin-top:70px}.band .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 .band h2{font-size:1.8rem;margin-bottom:6px}.band p{margin:0;color:#d5e0db;max-width:560px}
 /* pages */

@@ -57,9 +57,9 @@
       <h2>{{ $store }}</h2>
       <p>{{ Setting::get('about') }}</p>
       <div class="vals">
-        <div><b>Desain Modern</b><span>Sesuai tren dan kebutuhan</span></div>
-        <div><b>Material Berkualitas</b><span>Tahan lama dan kuat</span></div>
-        <div><b>Layanan Profesional</b><span>Konsultasi hingga after sales</span></div>
+        <div class="val"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><div><b>Desain Modern</b><span>Sesuai tren dan kebutuhan</span></div></div>
+        <div class="val"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20"/></svg><div><b>Material Berkualitas</b><span>Tahan lama dan kuat</span></div></div>
+        <div class="val"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M8.2 12.5 7 21l5-3 5 3-1.2-8.5"/></svg><div><b>Layanan Profesional</b><span>Konsultasi hingga after sales</span></div></div>
       </div>
       <a href="{{ route('about') }}" class="btn btn-out">Selengkapnya Tentang Kami</a>
     </div>
