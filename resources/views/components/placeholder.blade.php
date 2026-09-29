@@ -1,0 +1,1 @@
+<div class="ph-empty" role="img" aria-label="Foto belum tersedia"><svg viewBox="0 0 64 64" stroke-linecap="round" stroke-linejoin="round"><path d="M10 34V24a6 6 0 0 1 6-6h32a6 6 0 0 1 6 6v10"/><path d="M6 34h52v10H6z"/><path d="M12 44v8M52 44v8"/></svg></div>
