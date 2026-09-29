@@ -26,7 +26,7 @@
     <a href="{{ route('catalog.index') }}" class="{{ request()->routeIs('catalog.*') ? 'on' : '' }}">Katalog</a>
     <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'on' : '' }}">Kontak</a>
   </nav>
-  @if($wa)<a href="{{ $wa }}" target="_blank" rel="noopener" class="btn btn-dark head-wa">Hubungi Kami</a>@endif
+  @if($wa)<a href="{{ $wa }}" target="_blank" rel="noopener" class="btn btn-dark head-wa"><x-wa-icon :size="20" />Hubungi Kami</a>@endif
   <button class="menu-btn" aria-label="Buka menu" aria-controls="nav" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
 </div></header>
 
@@ -46,6 +46,6 @@
   </div>
   <div class="cp">&copy; {{ date('Y') }} {{ $store }}. Semua hak dilindungi.</div>
 </div></footer>
-@if($wa)<a class="wa-float" href="{{ $wa }}" target="_blank" rel="noopener">Chat WhatsApp</a>@endif
+@if($wa)<a class="wa-float" href="{{ $wa }}" target="_blank" rel="noopener" aria-label="Chat WhatsApp" title="Chat WhatsApp"><x-wa-icon :size="32" /></a>@endif
 </body>
 </html>

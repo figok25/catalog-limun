@@ -68,7 +68,7 @@
 
 <section class="band"><div class="wrap">
   <div><h2>Ingin Furniture Sesuai Keinginan Anda?</h2><p>Konsultasikan kebutuhan furniture Anda sekarang juga. Tim kami siap membantu memberikan solusi terbaik.</p></div>
-  @if($wa)<a href="{{ $wa }}" target="_blank" rel="noopener" class="btn btn-gold">Konsultasi Sekarang</a>
+  @if($wa)<a href="{{ $wa }}" target="_blank" rel="noopener" class="btn btn-gold"><x-wa-icon :size="20" />Konsultasi Sekarang</a>
   @else<a href="{{ route('contact') }}" class="btn btn-gold">Lihat Kontak Kami</a>@endif
 </div></section>
 @endsection
