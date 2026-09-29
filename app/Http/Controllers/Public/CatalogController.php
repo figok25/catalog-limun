@@ -27,7 +27,7 @@ class CatalogController extends Controller
     public function show(Product $product)
     {
         abort_unless($product->is_active, 404);
-        $product->load('category');
+        $product->load('category', 'images');
         $related = Product::active()->where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)->latest()->take(4)->get();
 

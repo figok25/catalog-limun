@@ -17,7 +17,7 @@
     @forelse($products as $p)
       <tr>
         <td>@if($p->image_url)<img class="thumb" src="{{ $p->image_url }}" alt="">@else<div class="thumb"></div>@endif</td>
-        <td>{{ $p->name }}</td><td>{{ $p->category->name }}</td><td>{{ $p->price_label }}</td>
+        <td>{{ $p->name }}</td><td>{{ $p->category->name }}</td><td>{{ $p->price_label }}@if($p->has_discount)<br><small style="color:var(--muted)"><s>{{ $p->original_price_label }}</s> &middot; -{{ $p->discount_badge_percent }}%</small>@endif</td>
         <td><span class="tag {{ $p->is_active ? 'on' : 'off' }}">{{ $p->is_active ? 'Aktif' : 'Nonaktif' }}</span> @if($p->is_featured)<span class="tag star">Unggulan</span>@endif</td>
         <td><div class="acts">
           <a class="btn btn-out btn-sm" href="{{ route('admin.products.edit', $p) }}">Edit</a>

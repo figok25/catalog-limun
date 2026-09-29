@@ -2,18 +2,31 @@
 
 namespace App\Models;
 
+use App\Support\Rupiah;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Product extends Model
 {
-    protected $fillable = ['category_id', 'name', 'slug', 'price', 'description', 'image', 'is_featured', 'is_active'];
-    protected $casts = ['is_featured' => 'boolean', 'is_active' => 'boolean', 'price' => 'decimal:2'];
+    protected $fillable = ['category_id', 'name', 'slug', 'price', 'discount_percent', 'compare_price', 'description', 'image', 'is_featured', 'is_active'];
+    protected $casts = [
+        'is_featured' => 'boolean',
+        'is_active' => 'boolean',
+        'price' => 'decimal:2',
+        'discount_percent' => 'integer',
+        'compare_price' => 'decimal:2',
+    ];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /** Foto tambahan (galeri). Foto utama tetap di kolom `image`. */
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class)->orderBy('sort_order')->orderBy('id');
     }
 
     public function scopeActive($q)
@@ -26,9 +39,97 @@ class Product extends Model
         return $this->image ? Storage::disk('public')->url($this->image) : null;
     }
 
+    /** Daftar URL semua foto: foto utama dulu, lalu foto tambahan. */
+    public function getGalleryUrlsAttribute(): array
+    {
+        $urls = [];
+        if ($this->image_url) {
+            $urls[] = $this->image_url;
+        }
+        foreach ($this->images as $img) {
+            $urls[] = $img->url;
+        }
+
+        return $urls;
+    }
+
+    /**
+     * Jenis diskon:
+     *  - 'percent' : `price` = harga normal, dipotong `discount_percent`.
+     *  - 'coret'   : `price` = harga jual, `compare_price` = harga coret yang diisi langsung.
+     *  - 'none'    : tanpa diskon.
+     */
+    public function getDiscountModeAttribute(): string
+    {
+        if ((int) $this->discount_percent > 0) {
+            return 'percent';
+        }
+        if ($this->compare_price !== null) {
+            return 'coret';
+        }
+
+        return 'none';
+    }
+
+    public function getHasDiscountAttribute(): bool
+    {
+        if ($this->price === null) {
+            return false;
+        }
+        if ((int) $this->discount_percent > 0) {
+            return true;
+        }
+
+        return $this->compare_price !== null && (float) $this->compare_price > (float) $this->price;
+    }
+
+    /** Harga yang harus dibayar pembeli. */
+    public function getFinalPriceAttribute(): ?float
+    {
+        if ($this->price === null) {
+            return null;
+        }
+        $price = (float) $this->price;
+
+        return (int) $this->discount_percent > 0
+            ? round($price * (100 - (int) $this->discount_percent) / 100)
+            : $price;
+    }
+
+    /** Harga sebelum diskon (yang dicoret). Null bila tidak ada diskon. */
+    public function getOriginalPriceAttribute(): ?float
+    {
+        if (! $this->has_discount) {
+            return null;
+        }
+
+        return (int) $this->discount_percent > 0 ? (float) $this->price : (float) $this->compare_price;
+    }
+
+    /** Persentase untuk badge/label; pada mode harga coret dihitung otomatis. */
+    public function getDiscountBadgePercentAttribute(): int
+    {
+        if ((int) $this->discount_percent > 0) {
+            return (int) $this->discount_percent;
+        }
+        if (! $this->has_discount) {
+            return 0;
+        }
+        $orig = (float) $this->compare_price;
+
+        return max(1, (int) round(($orig - (float) $this->price) / $orig * 100));
+    }
+
+    /** Harga yang ditampilkan (sudah dipotong diskon bila ada). */
     public function getPriceLabelAttribute(): string
     {
-        return $this->price !== null ? 'Rp ' . number_format((float) $this->price, 0, ',', '.') : 'Hubungi kami';
+        return $this->final_price !== null ? Rupiah::format($this->final_price) : 'Hubungi kami';
+    }
+
+    /** Harga asli yang ditampilkan dicoret. */
+    public function getOriginalPriceLabelAttribute(): ?string
+    {
+        return $this->original_price !== null ? Rupiah::format($this->original_price) : null;
     }
 
     public function getWhatsappUrlAttribute(): ?string

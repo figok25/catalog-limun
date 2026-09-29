@@ -49,7 +49,7 @@
   <div class="about">
     <div class="pic">
       @if(Setting::get('years_experience'))
-      <div class="years"><b>{{ Setting::get('years_experience') }}+</b><span><strong style="color:#fff">Tahun Pengalaman</strong>Melayani pelanggan di seluruh Indonesia</span></div>
+      <div class="years"><b>{{ Setting::get('years_experience') }}+</b><span><strong style="color:#fff">Tahun Pengalaman</strong> Melayani pelanggan di seluruh Indonesia</span></div>
       @endif
     </div>
     <div class="tx">
