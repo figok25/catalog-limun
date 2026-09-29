@@ -34,15 +34,16 @@
 
 <footer class="foot"><div class="wrap">
   <div class="cols">
-    <div><h4>{{ $store }}</h4><p>{{ Str::limit(Setting::get('tagline', ''), 160) }}</p></div>
+    <div><h4>{{ $store }}</h4><p>{{ Str::limit(Setting::get('tagline', ''), 160) }}</p>
+      <div class="tags" aria-label="Motto"><span>#Satusatunyamebelterpercayadimalang</span></div></div>
     <div><h4>Navigasi</h4><ul>
       <li><a href="{{ route('home') }}">Beranda</a></li><li><a href="{{ route('about') }}">Tentang Kami</a></li>
       <li><a href="{{ route('catalog.index') }}">Katalog</a></li><li><a href="{{ route('contact') }}">Kontak</a></li></ul></div>
     <div><h4>Kontak</h4><ul>
-      @if(Setting::get('address'))<li>{{ Setting::get('address') }}</li>@endif
-      @if(Setting::get('hours'))<li>{{ Setting::get('hours') }}</li>@endif
-      @if($wa)<li><a href="{{ $wa }}" target="_blank" rel="noopener">WhatsApp: {{ Setting::get('whatsapp') }}</a></li>@endif
-      @if(Setting::get('instagram'))<li><a href="{{ Setting::get('instagram') }}" target="_blank" rel="noopener">Instagram</a></li>@endif</ul></div>
+      @if(Setting::get('address'))<li class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>{{ Setting::get('address') }}</span></li>@endif
+      @if(Setting::get('hours'))<li class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>{{ Setting::get('hours') }}</span></li>@endif
+      @if($wa)<li class="ci"><x-wa-icon :size="17" /><a href="{{ $wa }}" target="_blank" rel="noopener">WhatsApp: {{ Setting::get('whatsapp') }}</a></li>@endif
+      @if(Setting::get('instagram'))<li class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg><a href="{{ Setting::get('instagram') }}" target="_blank" rel="noopener">Instagram</a></li>@endif</ul></div>
   </div>
   <div class="cp">&copy; {{ date('Y') }} {{ $store }}. Semua hak dilindungi.</div>
 </div></footer>
