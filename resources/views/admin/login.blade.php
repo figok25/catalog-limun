@@ -5,6 +5,7 @@
 <meta name="robots" content="noindex,nofollow"><title>Login Admin - Limun Jaya Furniture</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+@include('partials.favicon')
 </head>
 <body>
 <div class="login"><div class="panel">

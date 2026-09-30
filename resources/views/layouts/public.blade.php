@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+@include('partials.favicon')
 </head>
 <body>
 <header class="site-head"><div class="wrap">
@@ -26,7 +27,14 @@
     <a href="{{ route('catalog.index') }}" class="{{ request()->routeIs('catalog.*') ? 'on' : '' }}">Katalog</a>
     <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'on' : '' }}">Kontak</a>
   </nav>
-  @if($wa)<a href="{{ $wa }}" target="_blank" rel="noopener" class="btn btn-dark head-wa"><x-wa-icon :size="20" />Hubungi Kami</a>@endif
+  <div class="head-actions">
+    @if($wa)<a href="{{ $wa }}" target="_blank" rel="noopener" class="btn btn-dark head-wa"><x-wa-icon :size="20" />Hubungi Kami</a>@endif
+    @auth
+    <a href="{{ route('admin.dashboard') }}" class="head-user" aria-label="Dashboard admin" title="Dashboard admin"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></a>
+    @else
+    <a href="{{ route('login') }}" class="head-user" aria-label="Login admin" title="Login admin"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></a>
+    @endauth
+  </div>
   <button class="menu-btn" aria-label="Buka menu" aria-controls="nav" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
 </div></header>
 
@@ -43,7 +51,14 @@
       @if(Setting::get('address'))<li class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>{{ Setting::get('address') }}</span></li>@endif
       @if(Setting::get('hours'))<li class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>{{ Setting::get('hours') }}</span></li>@endif
       @if($wa)<li class="ci"><x-wa-icon :size="17" /><a href="{{ $wa }}" target="_blank" rel="noopener">WhatsApp: {{ Setting::get('whatsapp') }}</a></li>@endif
-      @if(Setting::get('instagram'))<li class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg><a href="{{ Setting::get('instagram') }}" target="_blank" rel="noopener">Instagram</a></li>@endif</ul></div>
+      @if(Setting::get('instagram'))<li class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg><a href="{{ Setting::get('instagram') }}" target="_blank" rel="noopener">Instagram</a></li>@endif</ul>
+      @if(Setting::get('address'))
+      @php $mapQ = urlencode(Setting::get('address')); @endphp
+      <div class="foot-map">
+        <iframe title="Lokasi {{ $store }} di Google Maps" src="https://www.google.com/maps?q={{ $mapQ }}&z=16&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <a href="https://www.google.com/maps/search/?api=1&query={{ $mapQ }}" target="_blank" rel="noopener">Buka di Google Maps &rarr;</a>
+      </div>
+      @endif</div>
   </div>
   <div class="cp">&copy; {{ date('Y') }} {{ $store }}. Semua hak dilindungi.</div>
 </div></footer>
