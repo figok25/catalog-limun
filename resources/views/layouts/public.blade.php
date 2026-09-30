@@ -32,7 +32,7 @@
     @auth
     <a href="{{ route('admin.dashboard') }}" class="head-user" aria-label="Dashboard admin" title="Dashboard admin"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></a>
     @else
-    <a href="{{ route('login') }}" class="head-user" aria-label="Login admin" title="Login admin"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></a>
+    {{-- <a href="{{ route('login') }}" class="head-user" aria-label="Login admin" title="Login admin"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></a> --}}
     @endauth
   </div>
   <button class="menu-btn" aria-label="Buka menu" aria-controls="nav" onclick="document.getElementById('nav').classList.toggle('open')">&#9776;</button>
