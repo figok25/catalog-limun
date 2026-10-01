@@ -26,11 +26,11 @@ class SettingController extends Controller
             'address' => 'nullable|string|max:300',
             'instagram' => 'nullable|url|max:200',
             'hours' => 'nullable|string|max:150',
-            'maps_url' => 'nullable|url|max:500',
+            'maps_url' => ['nullable', 'string', 'max:2000', 'regex:/https:\/\//i'],
         ], [
             'whatsapp.regex' => 'Nomor WhatsApp harus diawali 62 tanpa tanda + atau spasi, contoh 628123456789.',
             'instagram.url' => 'Link Instagram harus berupa URL lengkap (https://...).',
-            'maps_url.url' => 'Link Maps harus berupa URL lengkap (https://...).',
+            'maps_url.regex' => 'Isi dengan link Google Maps (https://...) atau kode embed <iframe> dari Google Maps.',
         ]);
         foreach (self::KEYS as $k) {
             Setting::put($k, $data[$k] ?? null);
