@@ -8,7 +8,7 @@
     @if(Setting::get('address'))<dt>Alamat</dt><dd>{{ Setting::get('address') }}</dd>@endif
     @if(Setting::get('hours'))<dt>Jam operasional</dt><dd>{{ Setting::get('hours') }}</dd>@endif
     @if($wa)<dt>WhatsApp</dt><dd><a href="{{ $wa }}" target="_blank" rel="noopener">{{ Setting::get('whatsapp') }}</a></dd>@endif
-    @if(Setting::get('instagram'))<dt>Instagram</dt><dd><a href="{{ Setting::get('instagram') }}" target="_blank" rel="noopener">{{ Setting::get('instagram') }}</a></dd>@endif
+    @if(Setting::get('instagram'))<dt>Instagram</dt><dd><a href="{{ Setting::instagramLink() ?? Setting::get('instagram') }}" target="_blank" rel="noopener">{{ Setting::instagramHandle() ? '@' . Setting::instagramHandle() : Setting::get('instagram') }}</a></dd>@endif
     @unless(Setting::get('address') || $wa || Setting::get('instagram'))<dd>Informasi kontak belum diisi.</dd>@endunless
   </dl></div>
   <p style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap">

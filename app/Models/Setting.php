@@ -74,6 +74,38 @@ class Setting extends Model
         return 'https://www.google.com/maps?q=' . urlencode(static::mapsQuery()) . '&z=17&output=embed';
     }
 
+    /** Username Instagram, diambil dari link (https://instagram.com/namaakun) atau teks "@namaakun" / "namaakun". Null bila tidak bisa dibaca. */
+    public static function instagramHandle(): ?string
+    {
+        $raw = trim((string) static::get('instagram'));
+        if ($raw === '') {
+            return null;
+        }
+        if (preg_match('#instagram\.com/([^/?\#\s]+)#i', $raw, $m)) {
+            return ltrim($m[1], '@') ?: null;
+        }
+        if (preg_match('/^@?([A-Za-z0-9._]+)$/', $raw, $m)) {
+            return $m[1];
+        }
+
+        return null;
+    }
+
+    /** Link profil Instagram: pakai isian admin bila sudah berupa URL, selain itu dibentuk dari username. */
+    public static function instagramLink(): ?string
+    {
+        $raw = trim((string) static::get('instagram'));
+        if ($raw === '') {
+            return null;
+        }
+        if (preg_match('#^https?://#i', $raw)) {
+            return $raw;
+        }
+        $h = static::instagramHandle();
+
+        return $h ? 'https://instagram.com/' . $h : null;
+    }
+
     /** Link "Buka di Google Maps": link tempat dari admin bila ada, selain itu pencarian nama toko + alamat. */
     public static function mapLink(): ?string
     {
