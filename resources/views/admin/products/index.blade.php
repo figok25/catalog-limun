@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('title', 'Produk')
 @section('content')
-<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px"><h1 style="margin:0">Produk</h1>
+<div class="head-row"><h1>Produk</h1>
   <a class="btn btn-dark" href="{{ route('admin.products.create') }}">Tambah Produk</a></div>
 <div class="panel">
-  <form method="get" class="two" style="grid-template-columns:2fr 1fr 1fr auto;margin-bottom:16px;align-items:center">
+  <form method="get" class="filter-form">
     <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari nama produk" aria-label="Cari">
     <select name="kategori" aria-label="Kategori"><option value="">Semua kategori</option>
       @foreach($categories as $c)<option value="{{ $c->id }}" @selected(request('kategori') == $c->id)>{{ $c->name }}</option>@endforeach</select>

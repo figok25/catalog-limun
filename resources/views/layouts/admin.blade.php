@@ -10,7 +10,12 @@
 </head>
 <body>
 <div class="adm">
-  <aside class="side">
+  <header class="adm-top">
+    <a href="{{ route('admin.dashboard') }}" class="adm-brand"><b>LIMUN JAYA</b><small>ADMIN</small></a>
+    <button type="button" class="adm-burger" id="admBurger" aria-label="Buka menu" aria-expanded="false" aria-controls="admSide"><span></span><span></span><span></span></button>
+  </header>
+  <div class="adm-overlay" id="admOverlay"></div>
+  <aside class="side" id="admSide">
     <a href="{{ route('admin.dashboard') }}" class="logo"><span><b>LIMUN JAYA</b><small>ADMIN</small></span></a>
     <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'on' : '' }}">Dashboard</a>
     <a href="{{ route('admin.products.index') }}" class="{{ request()->routeIs('admin.products.*') ? 'on' : '' }}">Produk</a>
@@ -25,5 +30,20 @@
     @yield('content')
   </div>
 </div>
+<script>
+(function(){
+  var side=document.getElementById('admSide'),btn=document.getElementById('admBurger'),ov=document.getElementById('admOverlay');
+  function set(open){
+    side.classList.toggle('open',open);
+    ov.classList.toggle('show',open);
+    document.body.classList.toggle('adm-lock',open);
+    btn.setAttribute('aria-expanded',open);
+  }
+  btn.addEventListener('click',function(){set(!side.classList.contains('open'));});
+  ov.addEventListener('click',function(){set(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+  window.addEventListener('resize',function(){if(window.innerWidth>900)set(false);});
+})();
+</script>
 </body>
 </html>
