@@ -14,7 +14,7 @@
     ['address','Alamat','textarea',null],
     ['hours','Jam operasional','text',null],
     ['instagram','Link Instagram','text','Contoh: https://instagram.com/namaakun'],
-    ['maps_url','Link Google Maps','text',null],
+    ['maps_url','Link Google Maps','text','Tempel link tempat toko dari Google Maps. Untuk pin dan nama toko yang pasti di peta footer: Google Maps → Bagikan → Sematkan peta → Salin HTML, lalu tempel di sini.'],
   ] as [$k,$label,$type,$hint])
   <div class="form-g"><label for="{{ $k }}">{{ $label }}</label>
     @if($type==='textarea')<textarea id="{{ $k }}" name="{{ $k }}" rows="3">{{ old($k, Setting::get($k)) }}</textarea>

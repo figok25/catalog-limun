@@ -52,11 +52,11 @@
       @if(Setting::get('hours'))<li class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>{{ Setting::get('hours') }}</span></li>@endif
       @if($wa)<li class="ci"><x-wa-icon :size="17" /><a href="{{ $wa }}" target="_blank" rel="noopener">WhatsApp: {{ Setting::get('whatsapp') }}</a></li>@endif
       @if(Setting::get('instagram'))<li class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg><a href="{{ Setting::get('instagram') }}" target="_blank" rel="noopener">Instagram</a></li>@endif</ul>
-      @if(Setting::get('address'))
-      @php $mapQ = urlencode(Setting::get('address')); @endphp
+      @php $mapSrc = Setting::mapEmbedSrc(); $mapLink = Setting::mapLink(); @endphp
+      @if($mapSrc)
       <div class="foot-map">
-        <iframe title="Lokasi {{ $store }} di Google Maps" src="https://www.google.com/maps?q={{ $mapQ }}&z=16&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-        <a href="https://www.google.com/maps/search/?api=1&query={{ $mapQ }}" target="_blank" rel="noopener">Buka di Google Maps &rarr;</a>
+        <iframe title="Lokasi {{ $store }} di Google Maps" src="{{ $mapSrc }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        @if($mapLink)<a href="{{ $mapLink }}" target="_blank" rel="noopener">Buka di Google Maps &rarr;</a>@endif
       </div>
       @endif</div>
   </div>

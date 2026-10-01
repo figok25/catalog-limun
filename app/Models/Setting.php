@@ -39,4 +39,52 @@ class Setting extends Model
         $text ??= 'Halo ' . static::get('store_name', 'Limun Jaya Furniture') . ', saya ingin konsultasi mengenai furniture.';
         return 'https://wa.me/' . $num . '?text=' . rawurlencode($text);
     }
+
+    /**
+     * Nilai kolom "Link Google Maps" dibersihkan: admin boleh menempel link biasa,
+     * URL embed, atau kode <iframe> utuh dari Google Maps (diambil bagian src-nya).
+     */
+    private static function mapsValue(): string
+    {
+        $raw = trim((string) static::get('maps_url'));
+        if (preg_match('/src\s*=\s*["\']([^"\']+)["\']/i', $raw, $m)) {
+            $raw = html_entity_decode($m[1]);
+        }
+
+        return str_starts_with($raw, 'https://') ? $raw : '';
+    }
+
+    /** Teks pencarian: nama toko + alamat, supaya Google menampilkan nama toko (bukan hanya alamat). */
+    private static function mapsQuery(): string
+    {
+        return trim(static::get('store_name', 'Limun Jaya Furniture') . ' ' . static::get('address', ''));
+    }
+
+    /** Sumber iframe peta. Prioritas: URL embed dari admin, lalu pencarian nama toko + alamat. */
+    public static function mapEmbedSrc(): ?string
+    {
+        $v = static::mapsValue();
+        if (str_starts_with($v, 'https://www.google.com/maps/embed')) {
+            return $v;
+        }
+        if (! static::get('address') && $v === '') {
+            return null;
+        }
+
+        return 'https://www.google.com/maps?q=' . urlencode(static::mapsQuery()) . '&z=17&output=embed';
+    }
+
+    /** Link "Buka di Google Maps": link tempat dari admin bila ada, selain itu pencarian nama toko + alamat. */
+    public static function mapLink(): ?string
+    {
+        $v = static::mapsValue();
+        if ($v !== '' && ! str_starts_with($v, 'https://www.google.com/maps/embed')) {
+            return $v;
+        }
+        if (! static::get('address')) {
+            return null;
+        }
+
+        return 'https://www.google.com/maps/search/?api=1&query=' . urlencode(static::mapsQuery());
+    }
 }

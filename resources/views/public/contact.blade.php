@@ -13,7 +13,7 @@
   </dl></div>
   <p style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap">
     @if($wa)<a href="{{ $wa }}" target="_blank" rel="noopener" class="btn btn-dark">Chat via WhatsApp</a>@endif
-    @if(Setting::get('maps_url'))<a href="{{ Setting::get('maps_url') }}" target="_blank" rel="noopener" class="btn btn-out">Buka di Google Maps</a>@endif
+    @if(Setting::mapLink())<a href="{{ Setting::mapLink() }}" target="_blank" rel="noopener" class="btn btn-out">Buka di Google Maps</a>@endif
   </p>
 </div></section>
 @endsection
