@@ -18,7 +18,7 @@
 <body>
 <header class="site-head"><div class="wrap">
   <a href="{{ route('home') }}" class="logo" aria-label="{{ $store }}">
-    <svg viewBox="0 0 48 48" fill="none" stroke="#c9a45c" stroke-width="3" stroke-linejoin="round"><path d="M5 24 24 7l19 17"/><path d="M11 21v20h26V21"/><path d="M19 41V29h10v12"/></svg>
+    <img src="{{ asset('images/logo-limunjaya.png') }}" alt="" width="62" height="42">
     <span><b>LIMUN JAYA</b><small>FURNITURE</small></span>
   </a>
   <nav class="nav" id="nav" aria-label="Menu utama">
