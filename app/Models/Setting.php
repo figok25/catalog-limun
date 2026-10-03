@@ -106,10 +106,52 @@ class Setting extends Model
         return $h ? 'https://instagram.com/' . $h : null;
     }
 
+    /** Ubah teks heksadesimal (bisa lebih dari 64 bit) menjadi angka desimal berbentuk string, tanpa butuh ekstensi bcmath/gmp. */
+    private static function hexToDec(string $hex): string
+    {
+        $dec = '0';
+        foreach (str_split(ltrim(strtolower($hex), '0') ?: '0') as $ch) {
+            $carry = hexdec($ch);
+            $out = '';
+            for ($i = strlen($dec) - 1; $i >= 0; $i--) {
+                $n = (int) $dec[$i] * 16 + $carry;
+                $out = ($n % 10) . $out;
+                $carry = intdiv($n, 10);
+            }
+            while ($carry > 0) {
+                $out = ($carry % 10) . $out;
+                $carry = intdiv($carry, 10);
+            }
+            $dec = $out;
+        }
+
+        return ltrim($dec, '0') ?: '0';
+    }
+
+    /**
+     * Dari URL embed Google Maps (hasil tempel kode iframe), buat link yang membuka tempat/titik yang sama.
+     * Utama: ID tempat (cid) supaya nama toko ikut tampil. Cadangan: koordinat pin.
+     */
+    private static function pinLinkFromEmbed(string $embed): ?string
+    {
+        $embed = urldecode($embed);
+        if (preg_match('/!1s0x[0-9a-f]+:0x([0-9a-f]+)/i', $embed, $m)) {
+            return 'https://www.google.com/maps?cid=' . static::hexToDec($m[1]);
+        }
+        if (preg_match('/!2d(-?\d+(?:\.\d+)?)/', $embed, $lng) && preg_match('/!3d(-?\d+(?:\.\d+)?)/', $embed, $lat)) {
+            return 'https://www.google.com/maps/search/?api=1&query=' . $lat[1] . ',' . $lng[1];
+        }
+
+        return null;
+    }
+
     /** Link "Buka di Google Maps": link tempat dari admin bila ada, selain itu pencarian nama toko + alamat. */
     public static function mapLink(): ?string
     {
         $v = static::mapsValue();
+        if ($v !== '' && str_starts_with($v, 'https://www.google.com/maps/embed') && ($pin = static::pinLinkFromEmbed($v))) {
+            return $pin;
+        }
         if ($v !== '' && ! str_starts_with($v, 'https://www.google.com/maps/embed')) {
             return $v;
         }
