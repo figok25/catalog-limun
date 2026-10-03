@@ -25,6 +25,7 @@
     <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'on' : '' }}">Beranda</a>
     <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'on' : '' }}">Tentang Kami</a>
     <a href="{{ route('catalog.index') }}" class="{{ request()->routeIs('catalog.*') ? 'on' : '' }}">Katalog</a>
+    <a href="{{ route('portfolio.index') }}" class="{{ request()->routeIs('portfolio.*') ? 'on' : '' }}">Portofolio</a>
     <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'on' : '' }}">Kontak</a>
   </nav>
   <div class="head-actions">
@@ -46,7 +47,7 @@
       <div class="tags" aria-label="Motto"><span>#Satusatunyamebelterpercayadimalang</span></div></div>
     <div><h4>Navigasi</h4><ul>
       <li><a href="{{ route('home') }}">Beranda</a></li><li><a href="{{ route('about') }}">Tentang Kami</a></li>
-      <li><a href="{{ route('catalog.index') }}">Katalog</a></li><li><a href="{{ route('contact') }}">Kontak</a></li></ul></div>
+      <li><a href="{{ route('catalog.index') }}">Katalog</a></li><li><a href="{{ route('portfolio.index') }}">Portofolio</a></li><li><a href="{{ route('contact') }}">Kontak</a></li></ul></div>
     <div><h4>Kontak</h4><ul>
       @if(Setting::get('address'))<li class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>{{ Setting::get('address') }}</span></li>@endif
       @if(Setting::get('hours'))<li class="ci"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>{{ Setting::get('hours') }}</span></li>@endif

@@ -20,6 +20,7 @@
     <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'on' : '' }}">Dashboard</a>
     <a href="{{ route('admin.products.index') }}" class="{{ request()->routeIs('admin.products.*') ? 'on' : '' }}">Produk</a>
     <a href="{{ route('admin.categories.index') }}" class="{{ request()->routeIs('admin.categories.*') ? 'on' : '' }}">Kategori</a>
+    <a href="{{ route('admin.portfolios.index') }}" class="{{ request()->routeIs('admin.portfolios.*') ? 'on' : '' }}">Portofolio</a>
     <a href="{{ route('admin.settings.edit') }}" class="{{ request()->routeIs('admin.settings.*') ? 'on' : '' }}">Pengaturan Kontak</a>
     <a href="{{ route('home') }}" target="_blank">Lihat Website</a>
     <form method="post" action="{{ route('logout') }}">@csrf<button type="submit">Logout</button></form>
